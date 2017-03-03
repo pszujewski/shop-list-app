@@ -68,13 +68,42 @@ function modify(state, index) {
 
 // take the li element as the base html string to manipuate
 
-// create function : each element in the item array will be passed in, return html string for that item,
+// First Render function build out our HTML string for the list item
+// need to input state and html string were going to build out
+
+function makeHtml(item, index) {
+  // Ensure function determines within our state object if the items isChecked property is true
+  // if it is true, add class 
+  let checked = '<li id='+index+'> <span class="shopping-item shopping-item__checked">';
+  let unChecked = '<li id='+index+'> <span class="shopping-item">';
+  let endStr = item["name"] + '</span> <div class="shopping-item-controls"> <button class="shopping-item-toggle"> <span class="button-label"> check </span> </button> <button class="shopping-item-delete"> <span class="button-label"> delete </span> </button> </div> </li>';
+  //Ternary condition
+  return item['isChecked'] ? checked + endStr : unChecked + endStr;
+}
+  // Standard if else condition:
+  // if (item['isChecked']) {
+  //   return checked + endStr;
+  // } else {
+  //   return unChecked + endStr;
+  // }
+
+
+// create second Render Function:
+// each element in the item array will be passed in, return html string for that item,
 // ^ this function will appear in the body of the callback function in the map method below.
 
-// use array method map to iterate thru state object items array
+function render(state, $element) {
+  // assign to new array the strings containing our html for each list element
+  // use array method map to iterate thru state object items array
+  var listHtml = state.items.map( function(item, index) {
+    return makeHtml(item, index);
+  });
+  // render the html strings in the dom using the jQuery html method
+  $element.html(listHtml);
+}
 
-// assign to new array the strings containing our html for each list element
-// render the html strings in the dom using the jQuery html method
+
+
 
 
 // Event listeners:
