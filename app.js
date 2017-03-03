@@ -32,7 +32,7 @@ Hint: you may find it helpful to read up on and use the following jQuery methods
 // name of item, isChecked (true or false)... etc.
 
 var state = {
-  items: [];
+  items: []
 };
 
 
@@ -108,17 +108,60 @@ function render(state, $element) {
 
 // Event listeners:
 
+
 // Listen for click event on the button
-// and obtain value of user's input
-// Use add function to add input into the items array, invoke render function
+function handleAddItem($btn, $input, $element) {
+  $btn.on('click', function(e){
+    // and obtain value of user's input
+    let usersInput = $input.val();
+    // Use add function to add input into the items array
+    addToList(state, usersInput);
+    // invoke render function
+    render(state, $element);
+    //empty out input field
+    $input.val('');
+    e.preventDefault();
+  });
+}
+
+
 
 // Listen for click event on the check button
 // use this keyword to identify which item was clicked
 // call state modifcation function to change is checked value for that item
 // invoke render function
 
+function checkButton(state, $element) {
+  $element.on('click', '.shopping-item-toggle', function(e){
+    var id = $(e.currentTarget).parents('li').attr('id');
+    modify(state, id);
+    render(state, $element);
+    // console.log(id);
+  });
+}
+
+
+
 // Listen for click event on the delete button
 // use this keyword to identify which item was clicked
 // call state modifcation function to delete the item
 // invoke render function
+
+function deleteButton(state, $element) {
+  $element.on('click', '.shopping-item-delete', function(e){
+    var id = $(e.currentTarget).parents('li').attr('id');
+    deleteItem(state, id);
+    render(state, $element);
+    // console.log(id);
+  });
+}
+
+
+//Invocation of all functions:
+
+$(function() {
+  handleAddItem($('.btn'), $("#shopping-list-entry"), $(".shopping-list"));
+  checkButton(state, $(".shopping-list"));
+  deleteButton(state, $(".shopping-list"));
+});
 
