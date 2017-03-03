@@ -24,14 +24,15 @@ Do not alter index.html or main.css other than adding the links to the external 
 Hint: you may find it helpful to read up on and use the following jQuery methods: .submit(), preventDefault(), toggleClass(), and closest(). */
 
 
-// State Object
+// State Object:
 
 // items, empty array
 // What will each item look like?
 // each item will be an Object
 // name of item, isChecked (true or false)... etc.
+
 var state = {
-  items: [ {name:"fruits", isChecked:false } ];
+  items: [];
 };
 
 
@@ -40,13 +41,31 @@ var state = {
 // add function to add items
 // use array method push to add items to 'items array'
 
+function addToList(state, item) {
+  state.items.push( { name: item , isChecked: false } );
+}
+
 // remove function to delete items from array
 // use array method splice
 
-// function to change the ischecked value for any clicked item
+function deleteItem(state, index) {
+  state.items.splice( index, 1 );
+}
+
+// function to modify the ischecked value for any clicked item
+
+function modify(state, index) {
+  // Toggle the check logic
+  if ( state.items[index].isChecked ) {
+    state.items[index].isChecked = false;
+  } else {
+    state.items[index].isChecked = true;
+  }
+}
 
 
-// Render Functions
+// Render Functions:
+
 // take the li element as the base html string to manipuate
 
 // create function : each element in the item array will be passed in, return html string for that item,
@@ -58,7 +77,7 @@ var state = {
 // render the html strings in the dom using the jQuery html method
 
 
-// Event listeners
+// Event listeners:
 
 // Listen for click event on the button
 // and obtain value of user's input
